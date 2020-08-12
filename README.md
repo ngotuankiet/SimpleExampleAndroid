@@ -1,2 +1,2 @@
 # SimpleExampleAndroid
-source code example android native
+Check branch để hiện ra những Example code nhé :D 
