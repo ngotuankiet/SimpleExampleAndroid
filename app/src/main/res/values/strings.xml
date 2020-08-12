@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleExampleAndroid</string>
+    <string name="get_photo">get photo</string>
 </resources>

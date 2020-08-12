@@ -1,2 +1,3 @@
 # SimpleExampleAndroid
-Check branch để hiện ra những Example code nhé :D 
+
+Branch thực hiện take photo in devices! 
