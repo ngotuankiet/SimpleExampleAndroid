@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SimpleExampleAndroid</string>
     <string name="get_photo">get photo</string>
+    <string name="save_image">Save image</string>
 </resources>

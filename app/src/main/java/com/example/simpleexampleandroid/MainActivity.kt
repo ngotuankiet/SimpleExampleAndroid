@@ -14,10 +14,13 @@ import android.widget.ImageView
 class MainActivity : AppCompatActivity() {
     private lateinit var btnGetPhoto : Button
     private lateinit var ivPhoto : ImageView
+    private lateinit var btnSavePhoto : Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btnGetPhoto = findViewById(R.id.btn_get_photo)
+        btnSavePhoto = findViewById(R.id.btn_save_image)
         ivPhoto = findViewById(R.id.iv_photo)
 
         //set get photo
@@ -27,12 +30,20 @@ class MainActivity : AppCompatActivity() {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(intent,1)
         }
+
+        //save photo for storage
+        btnSavePhoto.setOnClickListener{
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == 1){
-            val bitmap = data?.extras?.get("data")
+            //docs google
+            val bitmap = data?.extras?.get("data") as? Bitmap
+
+            //uri
             val chosenImageUri : Uri? = data?.data
             val bitmap2 = MediaStore.Images.Media.getBitmap(this.contentResolver, chosenImageUri)
             Log.d("check",bitmap.toString())
@@ -40,3 +51,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
+// https://developer.android.com/training/data-storage/shared/media
