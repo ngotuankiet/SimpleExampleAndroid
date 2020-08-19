@@ -14,12 +14,9 @@ class CircleAdapter(private val arrayList: ArrayList<Int>) : RecyclerView.Adapte
 
         //set color
         fun getColorCircle(position: Int){
-            checkbox.checker = arrayList[position].isdone
+
         }
 
-        fun setContentVia{
-            arrayList
-        }
 
 
     }

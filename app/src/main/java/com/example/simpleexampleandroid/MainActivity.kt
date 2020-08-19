@@ -1,14 +1,15 @@
 package com.example.simpleexampleandroid
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var rcv: RecyclerView
     private lateinit var circleAdapter: CircleAdapter
+    private lateinit var circleViewModel : CircleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +17,13 @@ class MainActivity : AppCompatActivity() {
 
         rcv = findViewById(R.id.rcv_list_circle)
 
-        val arrayList = fakeData()
-        circleAdapter = CircleAdapter(arrayList)
+
+        //activity
+        /*  @Param: activity
+        *
+        * */
+        circleViewModel = ViewModelProvider(this)[CircleViewModel::class.java]
+        circleAdapter = circleViewModel.getData()?.let { CircleAdapter(it) }!! // circleAdapter = circleViewModel.getData()
 
         rcv.apply {
 
@@ -25,12 +31,5 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
     }
-    private fun fakeData(): ArrayList<Int>{
-        val arrayList = ArrayList<Int>()
-        for (i in 0..20){
-            val colorId = 3030 + i
-            arrayList.add(colorId)
-        }
-        return arrayList
-    }
 }
+//aplly, get ...kotlin.
