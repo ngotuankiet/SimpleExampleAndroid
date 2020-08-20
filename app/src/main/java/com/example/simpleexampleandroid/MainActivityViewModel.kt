@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.collect
 
-class MainActivityViewModel: ViewModel() {
+class MainActivityViewModel(): ViewModel() {
     private val _testLiveData = MutableLiveData<EventTest<String>>()
     val testLiveData : LiveData<EventTest<String>>
         get() = _testLiveData
@@ -18,9 +18,7 @@ class MainActivityViewModel: ViewModel() {
     val testButton : LiveData<ButtonUiModel>
         get() = _testButton
 
-    suspend fun setValue(){
-        MainActivityRepository().getRepository().collect { value ->
-            _testLiveData.value = value
-        }
+    fun setValue(){
+        _testButton.value = ButtonUiModel("", onClick = {})
     }
 }

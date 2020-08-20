@@ -2,6 +2,7 @@ package com.example.simpleexampleandroid
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -19,27 +20,22 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel = MainActivityViewModel()
         //run tren luong khac
+        mainActivityViewModel.setValue()
 
-        lifecycleScope.launch {
-            mainActivityViewModel.setValue()
+        val textObserver = Observer<ButtonUiModel> {
+            binding.textview.text = it.name
         }
-        binding.button.setOnClickListener {
-            mainActivityViewModel.testButton.observe(this, Observer {
-                it.name = "kiet"
-                it.onClick(
 
-                )
+        binding.button.setOnClickListener {
+            mainActivityViewModel.testButton.observe(this, Observer {it2 ->
+                it2.name = "kiet"
+                Log.d("check","test ${it2.name}")
+                it2.onClick.let{
+                    binding.textview.text = it2.name
+                }
             })
         }
 
-//        findViewById<Button>(R.id.btn_set_text).setOnClickListener{
-//            mainActivityViewModel.testLiveData.observe(this, Observer {
-//                it.getContentIfNotHandled()?.let {content ->
-//                    findViewById<TextView>(R.id.tv_hello_word).text = content
-//                }
-//
-//            })
-//        }
 
         setContentView(binding.root)
     }
