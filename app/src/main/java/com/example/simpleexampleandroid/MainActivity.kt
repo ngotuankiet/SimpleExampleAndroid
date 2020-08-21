@@ -11,14 +11,15 @@ import com.example.simpleexampleandroid.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mainActivityViewModel: MainActivityViewModel
-
+    private val mainActivityViewModel = MainActivityViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val binding = ActivityMainBinding.inflate(layoutInflater)
 
-        mainActivityViewModel = MainActivityViewModel()
+        setContentView(binding.root)
+
+//        mainActivityViewModel = MainActivityViewModel()
         //run tren luong khac
         mainActivityViewModel.setValue()
 
@@ -27,17 +28,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.button.setOnClickListener {
-            mainActivityViewModel.testButton.observe(this, Observer {it2 ->
-                it2.name = "kiet"
-                Log.d("check","test ${it2.name}")
-                it2.onClick.let{
-                    binding.textview.text = it2.name
-                }
-            })
+            mainActivityViewModel.testButton.observe(this, textObserver)
         }
 
 
-        setContentView(binding.root)
+
+
+
     }
 
 }
