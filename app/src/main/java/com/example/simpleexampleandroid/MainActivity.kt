@@ -15,10 +15,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userAdapter1 = UserAdapter(applicationContext)
+        userAdapter1 = UserAdapter(applicationContext,userAdapter2)
         userAdapter1.submitList(fakeData())
 
-        userAdapter2 = UserAdapter(applicationContext)
+        userAdapter2 = UserAdapter(applicationContext,userAdapter1)
         userAdapter2.submitList(fakeData())
 
 

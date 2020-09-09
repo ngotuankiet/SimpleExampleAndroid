@@ -16,7 +16,8 @@ import com.example.simpleexampleandroid.databinding.ItemUserBinding
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class UserAdapter constructor(
-    val context: Context
+    val context: Context,
+    val userAdapterK: UserAdapter
 ) : ListAdapter<User, UserAdapter.UserViewHolder>(UserDiffUtil) {
 
     // if checkedPosition = -1, there is no default selection
@@ -38,8 +39,10 @@ class UserAdapter constructor(
                 imageView.visibility = View.VISIBLE
                 notifyItemChanged(checkedPosition)
                 checkedPosition = adapterPosition
+
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -65,4 +68,5 @@ class UserAdapter constructor(
     override fun submitList(list: List<User>?) {
         super.submitList(list)
     }
+
 }
