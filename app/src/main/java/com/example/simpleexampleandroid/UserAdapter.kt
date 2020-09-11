@@ -12,34 +12,35 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.simpleexampleandroid.databinding.ItemUserBinding
-import kotlinx.android.synthetic.main.item_user.view.*
 
 class UserAdapter constructor(
-    val context: Context,
-    val userAdapterK: UserAdapter
 ) : ListAdapter<User, UserAdapter.UserViewHolder>(UserDiffUtil) {
 
     // if checkedPosition = -1, there is no default selection
     // if checkedPosition = 0, 1st item is selected by default
-    private var checkedPosition = -1
+    var checkedPosition = -1
+    var listener: ((position: Int)->Unit)? = null
+    var updateSelection: ((user: User) -> Boolean)? = null
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        private val textView = itemView.findViewById<TextView>(R.id.textViewName)
-        private val imageView = itemView.findViewById<ImageView>(R.id.imageView)
+        val textView = itemView.findViewById<TextView>(R.id.textViewName)
+        val imageView = itemView.findViewById<ImageView>(R.id.imageView)
         fun set(user: User) {
             textView.text = user.name
 
             //single item selection
+
             if (checkedPosition != adapterPosition) imageView.visibility = View.GONE
-            else if(checkedPosition == adapterPosition) imageView.visibility = View.VISIBLE
+            //else if(checkedPosition == adapterPosition) imageView.visibility = View.VISIBLE
 
             itemView.setOnClickListener {
                 imageView.visibility = View.VISIBLE
                 notifyItemChanged(checkedPosition)
+                Log.d("check","--- $checkedPosition")
                 checkedPosition = adapterPosition
 
+                listener?.invoke(checkedPosition)
             }
         }
 
@@ -52,6 +53,13 @@ class UserAdapter constructor(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.set(getItem(position))
+        val isCheck =  updateSelection?.invoke(getItem(position))
+        if (isCheck != null){
+            if (isCheck == false){
+                holder.imageView.visibility = View.GONE
+            }
+//            checkedPosition = -1
+        }
     }
 
     object UserDiffUtil : DiffUtil.ItemCallback<User>(){
@@ -67,6 +75,10 @@ class UserAdapter constructor(
 
     override fun submitList(list: List<User>?) {
         super.submitList(list)
+    }
+
+    fun updateCurrent(): User?{
+        return currentList[checkedPosition]
     }
 
 }
